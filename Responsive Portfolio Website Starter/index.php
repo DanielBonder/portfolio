@@ -192,30 +192,23 @@
 <section class="contact" id="contact">
   <h2 class="heading">Contact <span>Me</span></h2>
 
-  <form action="#">
-
+  <form action="contact.php" method="POST">
     <div class="input-group">
-
-      <div class="input-box">
-        <input type="text"
-        placeholder="Full Name">
-        <input type="email"
-        placeholder="Email">
-      </div>
-      <div class="input-box">
-        <input type="number"
-        placeholder="Phone Number">
-        <input type="text"
-        placeholder="Subject">
-      </div>
+        <div class="input-box">
+            <input type="text" name="full_name" placeholder="Full Name" required>
+            <input type="email" name="email" placeholder="Email" required>
+        </div>
+        <div class="input-box">
+            <input type="number" name="phone_number" placeholder="Phone Number" required>
+            <input type="text" name="subject" placeholder="Subject" required>
+        </div>
     </div>
-
     <div class="input-group2">
-      <textarea name="" id=""
-      placeholder="Your Message" cols="30" rows="10" ></textarea>
-      <input type="submit" value="Send Message" class="btn">
+        <textarea name="message" placeholder="Your Message" cols="30" rows="10" required></textarea>
+        <input type="submit" value="Send Message" class="btn">
     </div>
-  </form>
+</form>
+
 </section>
 <footer class="footer">
   <div class="social-icons">
