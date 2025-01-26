@@ -1,13 +1,14 @@
 // פונקציה שמטפלת בפתיחה וסגירה של התפריט
 function toggleMenu() {
-  let menuIcon = document.querySelector('#menu-icon');  // בחירת אייקון התפריט
-  let navbar = document.querySelector('.navbar');  // בחירת סרגל הניווט
+  const menuIcon = document.querySelector('#menu-icon'); // בחירת אייקון התפריט
+  const navbar = document.querySelector('.navbar'); // בחירת סרגל הניווט
 
-  if (menuIcon && navbar) {  // בדיקה שהאלמנטים קיימים לפני שמבצעים פעולות
-    menuIcon.classList.toggle('bx-x');  // שינוי אייקון ל-X
-    navbar.classList.toggle('active');  // פתיחה/סגירה של התפריט
+  if (menuIcon && navbar) { // בדיקה שהאלמנטים קיימים לפני שמבצעים פעולות
+    menuIcon.classList.toggle('bx-x'); // שינוי אייקון ל-X
+    navbar.classList.toggle('active'); // פתיחה/סגירה של התפריט
   }
 }
+
 // חיבור הפונקציה לאירוע לחיצה על אייקון התפריט
 document.querySelector('#menu-icon').onclick = toggleMenu;
 
@@ -25,14 +26,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // פונקציה לטיפול בשליחת הטופס
   function handleFormSubmit(e) {
-    e.preventDefault();
+    e.preventDefault(); // מניעת שליחה רגילה של הטופס
+
     const errors = validateForm(inputs);
 
     if (errors.length > 0) {
-      displayErrors(errors);
+      displayErrors(errors); // הצגת שגיאות אם יש
     } else {
-      displaySuccess();
-      form.reset();
+      sendFormData(new FormData(form)); // שליחת הנתונים לשרת
     }
   }
 
@@ -63,6 +64,28 @@ document.addEventListener("DOMContentLoaded", () => {
     return errors;
   }
 
+  // שליחת הטופס לשרת באמצעות Fetch API
+  function sendFormData(formData) {
+    fetch("contact.php", {
+      method: "POST",
+      body: formData,
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to send data.");
+        }
+        return response.text();
+      })
+      .then((data) => {
+        displaySuccess(); // הודעת הצלחה
+        form.reset(); // איפוס הטופס
+        console.log("Server response:", data); // פלט מהשרת
+      })
+      .catch((error) => {
+        alert("An error occurred: " + error.message);
+      });
+  }
+
   // הצגת שגיאות
   function displayErrors(errors) {
     alert(errors.join("\n"));
@@ -81,7 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // פונקציית בדיקת תקינות טלפון
   function validatePhone(phone) {
-    const phoneRegex = /^\d{10}$/;
+    const phoneRegex = /^\d{10}$/; // דורש מספר טלפון בן 10 ספרות
     return phoneRegex.test(phone);
   }
 });

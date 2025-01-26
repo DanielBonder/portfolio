@@ -1,34 +1,43 @@
 <?php
-// Connection details
-$host = 'localhost'; // שרת מסד הנתונים
-$username = 'root'; // שם המשתמש של MySQL
-$password = ''; // הסיסמה של MySQL
+// הצגת שגיאות PHP
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+// פרטי חיבור למסד הנתונים
+$host = 'localhost';
+$username = 'root'; // שם המשתמש
+$password = ''; // סיסמת MySQL
 $database = 'portfolio_db'; // שם מסד הנתונים
 
-// Create connection
+// יצירת חיבור למסד הנתונים
 $conn = new mysqli($host, $username, $password, $database);
 
-// Check connection
+// בדיקת חיבור למסד הנתונים
 if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+    die("❌ Database connection failed: " . $conn->connect_error);
 }
 
-// Fetch data from the database
-$sql = "SELECT * FROM projects"; // שנה את שם הטבלה בהתאם לטבלה שלך
-$result = $conn->query($sql);
+// בדיקה אם הטופס נשלח
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // קבלת הנתונים מהטופס
+    $full_name = $conn->real_escape_string($_POST['full_name']);
+    $email = $conn->real_escape_string($_POST['email']);
+    $phone_number = $conn->real_escape_string($_POST['phone_number']);
+    $subject = $conn->real_escape_string($_POST['subject']);
+    $message = $conn->real_escape_string($_POST['message']);
 
-// Initialize data array
-$projects = [];
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        $projects[] = $row;
+    // שאילתת SQL להוספת הנתונים לטבלה
+    $sql = "INSERT INTO contacts (full_name, email, phone_number, subject, message) 
+            VALUES ('$full_name', '$email', '$phone_number', '$subject', '$message')";
+
+    // ביצוע השאילתה ובדיקת הצלחה
+    if ($conn->query($sql) === TRUE) {
+        echo "✅ Your message has been saved successfully!";
+    } else {
+        echo "❌ Error: " . $conn->error;
     }
 }
 
-// Close the connection
+// סגירת החיבור למסד הנתונים
 $conn->close();
-
-// Convert data to JSON and return it
-header('Content-Type: application/json');
-echo json_encode($projects);
 ?>
