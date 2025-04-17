@@ -33,12 +33,6 @@ The site showcases my background, skills, and projects, and was designed to refl
 
 ---
 
-## 🔗 Live Site
-
-👉 [danielbonder.netlify.app](https://danielbonder.netlify.app)
-
----
-
 ## 📩 Contact
 
 If you'd like to get in touch, feel free to connect via email: danielbonder123@gmail.com
