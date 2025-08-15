@@ -36,3 +36,5 @@ The site showcases my background, skills, and projects, and was designed to refl
 ## 📩 Contact
 
 If you'd like to get in touch, feel free to connect via email: danielbonder123@gmail.com
+🔗 [LinkedIn – Daniel Bonder](https://www.linkedin.com/in/daniel-bonder1/)
+
